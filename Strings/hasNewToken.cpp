@@ -4,6 +4,13 @@ using namespace std;
 
 // String tokenizer class.
 class StringTokenizer {
+private:
+   StringTokenizer() {};
+   string delim_;
+   string str_;
+   int count_;
+   int begin_;
+   int end_;
 
 public:
 
@@ -54,15 +61,7 @@ public:
         begin_ = str_.find_first_not_of(delim_, end_);
      }
       return s;
-   }
-
-private:
-   StringTokenizer() {};
-   string delim_;
-   string str_;
-   int count_;
-   int begin_;
-   int end_;
+N   }
 };
 
 int main() {

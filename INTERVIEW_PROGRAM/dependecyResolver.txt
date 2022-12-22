@@ -1,0 +1,103 @@
+A: B, C, D
+B: D, E
+C:
+D: E
+E: A
+Package installation seq:
+E, C, D, B, A
+
+visited (A,B,D,E) - exit
+A -> B -> D -> E -> A ---> 
+D -> E -> C-> E
+
+Sudo code - 
+Hi Yogesh,
+
+I have executed below code and it is working. I have tested few test cases.
+
+__________________________________________________________________________________________________________________________________
+
+#include <bits/stdc++.h>
+using namespace std;
+
+bool isCycle(vector<char> input)
+{
+    char first = input[0];
+    for(int i = 1; i < input.size(); i++)
+    {
+        if(first == input[i])
+            return true;
+    }
+    return false;
+}
+
+void processDependency(map<char, set<char> >& mapOfSet)
+{
+    //Approach : iterate through MAP of package and dependencies
+    //Create list of each package and its dependencies recursivly.
+    //If current package is used as dependency in new list then there is cycle.
+    // Hence we have to return because packages can not be installed.
+	for (auto it = mapOfSet.begin(); it != mapOfSet.end(); it++) {
+    	vector<char> temp;
+		// Key is char which is package to be installed
+		cout << it->first << " => ";
+		temp.push_back(char(it->first));
+
+		// Value is a set of chars which are dependencies
+		set<char> st = it->second;
+
+		for (auto it = st.begin(); it != st.end(); it++) {
+		    //Uncomment to get view
+			//cout << (*it) << ' ';
+			temp.push_back(*it);
+			set<char> st1 = mapOfSet[*it];
+			for(auto it1 = st1.begin();
+			    it1 != st1.end(); it1++) {
+			        temp.push_back(*it1);
+			        // Uncomment to get view
+			        //cout << (*it1) << ' ';
+			    }
+		}
+		//Uncomment to get view
+		//cout<<"Is cycle for "<<it->first<<" = "<<isCycle(temp);
+		if (isCycle(temp))
+		{
+		    cout<<"\nThere is cycle in processing dependency. Hence Exiting...";
+		    return;
+		}
+		cout << '\n';
+	}
+	//We are here means no cycle is detected hence print map in reverese order to 
+    cout<<"\nSequence of packsge installation : ";
+	// Print map in reverse order to get sequence of installation
+	for (auto it = mapOfSet.rbegin(); it != mapOfSet.rend(); ++it)
+	{
+	    cout<<" "<<*it;
+	}
+}
+
+// Program Execution start from here
+int main()
+{
+	// Create map to store package name as key (char) and 
+	// value is a set of chars representing packages to be installed
+	map<char, set<char> > pkgDependency;
+	// Inserting values in the
+	// set mapped with key B
+    mapOfSet['B'].insert('C');
+    mapOfSet['B'].insert('A');
+    mapOfSet['B'].insert('D');
+	// Inserting values in the
+	// set mapped with key A
+	mapOfSet['A'].insert('C');
+	mapOfSet['A'].insert('D');
+
+	// Inserting values in the
+	// set mapped with key C
+	mapOfSet['C'].insert('B');
+	processDependency(pkgDependency);
+
+	return 0;
+}
+__________________________________________________________________________________________________________________________________
+
