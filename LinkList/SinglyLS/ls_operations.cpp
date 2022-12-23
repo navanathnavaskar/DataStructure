@@ -28,6 +28,20 @@ node* newNode(int data)
     return temp;
 }
 
+node* insertMid(node* head, int data, int index)
+{
+    //Create new node
+    node* nNode = newNode(data);
+    node* temp = head;
+    while(temp -> data != index)
+    {
+        temp = temp -> next;
+    }
+    nNode -> next = temp -> next;
+    temp -> next = nNode;
+    return head;
+}
+
 node* insertBegin(node* head, int data)
 {
     //Create new node
@@ -55,6 +69,54 @@ node* insertEnd(node* head, int data)
     return head;
 }
 
+node* deleteFirst(node* head)
+{
+    if (head == NULL)
+        return NULL;
+    node* temp = head;
+    head = temp -> next;
+    temp -> next = NULL;
+    free(temp);
+    return head;
+}
+
+node* deleteLast(node* head)
+{
+    if(head == NULL)
+        return NULL;
+    node* temp = head;
+    node* q = head;
+    while(temp -> next != NULL)
+    {
+        q = temp;
+        temp = temp -> next;
+    }
+    q -> next = NULL;
+    free(temp);
+    return head;
+}
+
+node* deleteMid(node* head, int index)
+{
+    if(head == NULL)
+        return NULL;
+    node* temp = head;
+    node* q = head;
+    while(temp && temp -> data != index)
+    {
+        q = temp;
+        temp = temp -> next;
+    }
+    if(temp != NULL)
+    {
+        q -> next = temp -> next;
+        temp -> next = NULL;
+        free(temp);
+    }
+    return head;
+}
+
+
 void Display(node* head)
 {
     if(head == NULL)
@@ -67,6 +129,7 @@ void Display(node* head)
         cout<<" -> "<<temp->data;
         temp = temp -> next;
     }
+    cout<<endl;
 }
 
 bool searchElement(node* head, int data)
@@ -96,6 +159,12 @@ int main()
     head = insertBegin(head, 25);
     head = insertEnd(head, 100);
     Display(head);
+    head = insertMid(head, 200, 15);
+    Display(head);
+    head = deleteMid(head, 300);
+    Display(head);
+    
+    /*
     int element;
     cout<<"\nEnter element to be searched : ";
     cin>>element;
@@ -108,5 +177,6 @@ int main()
     {
         cout<<"Element not found in the list\n";
     }
+    */
     return 0;
 }
