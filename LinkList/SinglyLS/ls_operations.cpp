@@ -1,11 +1,3 @@
-/******************************************************************************
-
-                              Online C++ Compiler.
-               Code, Compile, Run and Debug C++ program online.
-Write your code in this editor and press "Run" button to compile and execute it.
-
-*******************************************************************************/
-
 #include <iostream>
 #include <stdlib.h>
 
@@ -150,33 +142,70 @@ bool searchElement(node* head, int data)
 int main()
 {
     node* head = NULL;
-    Display(head);
-    head = insertBegin(head, 5);
-    //Display(head);
-    head = insertBegin(head, 10);
-    head = insertBegin(head, 15);
-    head = insertBegin(head, 20);
-    head = insertBegin(head, 25);
-    head = insertEnd(head, 100);
-    Display(head);
-    head = insertMid(head, 200, 15);
-    Display(head);
-    head = deleteMid(head, 300);
-    Display(head);
-    
-    /*
-    int element;
-    cout<<"\nEnter element to be searched : ";
-    cin>>element;
-    
-    if(searchElement(head, element))
+    int ch;
+    int data;
+    int index;
+    while (ch != 9)
     {
-        cout<<"\nElement found in the list.\n";
+        cout<<"\nLink List Operations : \n";
+        cout<<"1. Insert Begining\n2. Insert End\n3. Insert Middle\n4. Delete Begining\n5. Delete End\n6. Delete Specific\n7. Display List\n8. Search in List\n9. Exit\n";
+        cout<<"Enter your choice : ";
+        cin>>ch;
+
+        switch (ch)
+        {
+        case 1:
+            cout<<"\nEnter data to be added : ";
+            cin>>data;
+            head = insertBegin(head, data);
+            break;
+        case 2:
+            cout<<"\nEnter data to be added : ";
+            cin>>data;
+            head = insertEnd(head, data);
+            break;
+        case 3:
+            cout<<"\nEnter data to be added : ";
+            cin>>data;
+            cout<<"\nEnter Index node data : ";
+            cin>>index;
+            head = insertMid(head, data, index);
+            break;
+        case 4:
+            head = deleteFirst(head);
+            break;
+        case 5:
+            head = deleteLast(head);
+            break;
+
+        case 6:
+            cout<<"\nEnter data to be deleted : ";
+            cin>>data;
+            head = deleteMid(head, data);
+            break;
+        case 7:
+            Display(head);
+            break;
+        case 8:
+            cout<<"\nEnter data to be searched : ";
+            cin>>data;
+            if(searchElement(head, data))
+            {
+                cout<<"\nElement found in list.";
+            }
+            else
+            {
+                cout<<"\nElement not present in list.";
+            }
+            break;
+        case 9:
+            cout<<"\nExit from program...";
+            break;
+        default:
+            cout<<"\nEnter valid choice.";
+            break;
+        }
     }
-    else
-    {
-        cout<<"Element not found in the list\n";
-    }
-    */
+    
     return 0;
 }
